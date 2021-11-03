@@ -36,7 +36,7 @@ namespace Toi.Backend
                     Type = "string"
                 });
             });
-            services.AddSingleton<IStockPriceService, YahooFinanceStockPriceService>();
+            services.AddHttpClient<IStockPriceService, YahooFinanceStockPriceService>();
             services.AddHttpClient<IExchangeRateService, YahooFinanceExchangeRateService>();
         }
 
