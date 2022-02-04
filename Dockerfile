@@ -1,13 +1,13 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+﻿FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["./Toi.Backend.csproj", "."]
+COPY ["./Toi.Backend/Toi.Backend.csproj", "."]
 RUN dotnet restore "./Toi.Backend.csproj"
-COPY . .
+COPY ["./Toi.Backend/", "."]
 RUN dotnet build "Toi.Backend.csproj" -c Release -o /app/build
 
 FROM build AS publish

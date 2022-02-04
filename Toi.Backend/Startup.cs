@@ -1,3 +1,5 @@
+using System;
+using System.Dynamic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,13 +29,12 @@ namespace Toi.Backend
                 options.AddDefaultPolicy(builder =>
                 {
                     builder
-                        .WithOrigins("https://toi.vet", "http://localhost:3000")
+                        .SetIsOriginAllowed(origin => new Uri(origin).Host is "toi.vet" or "dev.toi.vet")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
             });
             services.AddControllers();
-
             services.AddMemoryCache();
             services.AddSwaggerGen(c =>
             {
