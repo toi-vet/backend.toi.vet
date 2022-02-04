@@ -29,7 +29,7 @@ namespace Toi.Backend
                 options.AddDefaultPolicy(builder =>
                 {
                     builder
-                        .SetIsOriginAllowed(origin => new Uri(origin).Host is "toi.vet" or "dev.toi.vet")
+                        .SetIsOriginAllowed(origin => new Uri(origin).Host is "toi.vet" or "dev.toi.vet" or "localhost")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
