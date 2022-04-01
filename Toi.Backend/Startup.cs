@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using Toi.Backend.Models;
 using Toi.Backend.Services.ExchangeRateService;
 using Toi.Backend.Services.StockPriceService;
+using Toi.Backend.Services.ToiNewsService;
 
 namespace Toi.Backend
 {
@@ -49,6 +50,7 @@ namespace Toi.Backend
             });
             services.AddHttpClient<IStockPriceService, YahooFinanceStockPriceService>();
             services.AddHttpClient<IExchangeRateService, YahooFinanceExchangeRateService>();
+            services.AddSingleton<IToiNewsService, ToiNewsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

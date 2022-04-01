@@ -6,7 +6,8 @@
         <LangVersion>default</LangVersion>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+        <PackageReference Include="System.ServiceModel.Syndication" Version="6.0.0" />
     </ItemGroup>
     <ItemGroup>
       <Content Include="..\Dockerfile">
