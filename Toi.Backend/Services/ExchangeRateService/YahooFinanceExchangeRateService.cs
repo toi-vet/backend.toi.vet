@@ -14,11 +14,11 @@ namespace Toi.Backend.Services.ExchangeRateService
             _client = client;
         }
 
-        public async Task<ExchangeRate?> GetExchangeRateAsync(Currency from, Currency to)
+        public async Task<ExchangeRate?> GetExchangeRateAsync()
         {
-            var url = $"https://query1.finance.yahoo.com/v7/finance/quote?symbols={from.Symbol}{to.Symbol}%3DX";
+            var url = $"https://query1.finance.yahoo.com/v8/finance/quote?symbols={"CAD"}{"EUR"}%3DX";
             var response = await _client.GetFromJsonAsync<YahooFinanceQuoteResponse>(url);
-            return response?.ToExchangeRate(from, to);
+            return response?.ToExchangeRate("CAD", "EUR");
         }
     }
 }

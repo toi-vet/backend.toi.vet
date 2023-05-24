@@ -6,7 +6,7 @@ namespace Toi.Backend.Services.StockPriceService
 {
     public interface IStockPriceService
     {
-        Task<StockPrice?> GetCurrentPriceAsync(string symbol);
-        Task<List<IntradayDataPoint>?> GetIntradayDataAsync(string symbol);
+        Task<StockPrice?> GetCurrentPriceAsync();
+        Task<List<IntradayDataPoint>?> GetIntradayDataAsync();
     }
 }

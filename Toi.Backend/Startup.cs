@@ -1,11 +1,14 @@
 using System;
 using System.Dynamic;
+using GraphQL.Client.Http;
+using GraphQL.Client.Serializer.SystemTextJson;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using Toi.Backend.Models;
 using Toi.Backend.Services.ExchangeRateService;
 using Toi.Backend.Services.StockPriceService;
@@ -48,14 +51,17 @@ namespace Toi.Backend
                     Type = "string"
                 });
             });
-            services.AddHttpClient<IStockPriceService, YahooFinanceStockPriceService>();
-            services.AddHttpClient<IExchangeRateService, YahooFinanceExchangeRateService>();
+            services.AddScoped(sp =>
+                new GraphQLHttpClient("https://app-money.tmx.com/graphql", new SystemTextJsonSerializer()));
+            services.AddHttpClient<IStockPriceService, TmxStockPriceService>();
+            services.AddHttpClient<IExchangeRateService, EcbExchangeRateService>();
             services.AddSingleton<IToiNewsService, ToiNewsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSerilogRequestLogging();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -69,7 +75,7 @@ namespace Toi.Backend
             app.UseCors();
 
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

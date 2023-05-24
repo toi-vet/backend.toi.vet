@@ -15,15 +15,17 @@ namespace Toi.Backend.Services.StockPriceService
             _client = client;
         }
 
-        public async Task<StockPrice?> GetCurrentPriceAsync(string symbol)
+        public async Task<StockPrice?> GetCurrentPriceAsync()
         {
-            var url = $"https://query1.finance.yahoo.com/v7/finance/quote?symbols={symbol}";
+            var symbol = "TOI.V";
+            var url = $"https://query1.finance.yahoo.com/v6/finance/quote?symbols={symbol}";
             var response = await _client.GetFromJsonAsync<YahooFinanceQuoteResponse>(url);
             return response?.ToStockPrice();
         }
 
-        public async Task<List<IntradayDataPoint>?> GetIntradayDataAsync(string symbol)
+        public async Task<List<IntradayDataPoint>?> GetIntradayDataAsync()
         {
+            var symbol = "TOI.V";
             var url = $"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?symbol={symbol}&interval=1m&includePrePost=true";
             var response = await _client.GetFromJsonAsync<YahooFinanceChartResponse>(url);
             return response?.ToIntradayData();
