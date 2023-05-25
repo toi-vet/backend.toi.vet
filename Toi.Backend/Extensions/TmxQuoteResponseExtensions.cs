@@ -19,7 +19,7 @@ public static class TmxQuoteResponseExtensions
             OpenPrice = quote.OpenPrice,
             ClosePrice = quote.Close,
             ExchangeName = quote.ExchangeName,
-            Market = "",
+            Market = quote.MarketPlace,
             MarketState = quote.OpenPrice == null ? "closed" : "open",
             Currency = "CAD",
         };

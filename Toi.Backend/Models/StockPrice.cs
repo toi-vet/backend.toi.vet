@@ -68,7 +68,7 @@ namespace Toi.Backend.Models
             {
                 ClosePriceConvered = ClosePrice.Value * value;    
             }
-            ConvertedCurrency = currency;
+            ConvertedCurrency = "EUR";
         }
     }
 }

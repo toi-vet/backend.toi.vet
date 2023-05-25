@@ -31,63 +31,17 @@ public class TmxStockPriceService : IStockPriceService
             Query = @"query getQuoteBySymbol($symbol: String, $locale: String) {
   getQuoteBySymbol(symbol: $symbol, locale: $locale) {
     symbol
-    name
     price
     priceChange
     percentChange
     exchangeName
-    exShortName
-    exchangeCode
     marketPlace
-    sector
-    industry
     volume
     openPrice
     dayHigh
     dayLow
-    MarketCap
-    MarketCapAllClasses
-    peRatio
     prevClose
-    dividendFrequency
-    dividendYield
-    dividendAmount
-    dividendCurrency
-    beta
-    eps
-    exDividendDate
-    longDescription
-    fulldescription
-    website
-    email
-    phoneNumber
-    fullAddress
-    employees
-    shareOutStanding
-    totalDebtToEquity
-    totalSharesOutStanding
-    sharesESCROW
-    vwap
-    dividendPayDate
-    weeks52high
-    weeks52low
-    alpha
-    averageVolume10D
-    averageVolume30D
-    averageVolume50D
-    priceToBook
-    priceToCashFlow
-    returnOnEquity
-    returnOnAssets
-    day21MovingAvg
-    day50MovingAvg
-    day200MovingAvg
-    dividend3Years
-    dividend5Years
-    datatype
-    issueType
     close
-    __typename
   }
 }
 ",
