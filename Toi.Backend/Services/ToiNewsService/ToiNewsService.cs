@@ -11,7 +11,7 @@ public class ToiNewsService : IToiNewsService
 {
     public IList<NewsItem> GetNewsItems(int take)
     {
-        var url = "https://topicus.com/rss";
+        const string url = "https://www.globenewswire.com/rssfeed/organization/ARDakRGkVrpjF7tpA0plFA==";
         try
         {
             using var reader = XmlReader.Create(url);

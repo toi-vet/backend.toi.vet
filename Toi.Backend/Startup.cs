@@ -1,5 +1,4 @@
 using System;
-using System.Dynamic;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
 using Microsoft.AspNetCore.Builder;
@@ -33,7 +32,7 @@ namespace Toi.Backend
                 options.AddDefaultPolicy(builder =>
                 {
                     builder
-                        .SetIsOriginAllowed(origin => new Uri(origin).Host is "toi.vet" or "dev.toi.vet" or "localhost")
+                        .SetIsOriginAllowed(origin => new Uri(origin).Host is "toi.vet" or "dev.toi.vet" or "localhost" or "toi-vet.fly.dev")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
