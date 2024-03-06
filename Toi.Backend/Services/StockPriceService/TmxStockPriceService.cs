@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -5,22 +6,17 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Client.Http;
-using Microsoft.AspNetCore.Mvc.Localization;
+using Microsoft.Extensions.Logging;
 using Toi.Backend.Extensions;
 using Toi.Backend.Models;
 
 namespace Toi.Backend.Services.StockPriceService;
 
-public class TmxStockPriceService : IStockPriceService
+public class TmxStockPriceService(ILogger<TmxStockPriceService> logger, GraphQLHttpClient graphqlClient, HttpClient httpClient) : IStockPriceService
 {
-    private readonly GraphQLHttpClient _graphqlClient;
-    private readonly HttpClient _httpClient;
-
-    public TmxStockPriceService(GraphQLHttpClient graphqlClient, HttpClient httpClient)
-    {
-        _graphqlClient = graphqlClient;
-        _httpClient = httpClient;
-    }
+    private readonly ILogger<TmxStockPriceService> _logger = logger;
+    private readonly GraphQLHttpClient _graphqlClient = graphqlClient;
+    private readonly HttpClient _httpClient = httpClient;
 
     public async Task<StockPrice?> GetCurrentPriceAsync()
     {
@@ -67,7 +63,16 @@ public class TmxStockPriceService : IStockPriceService
         var symbol = "TOI.V";
         var url =
             $"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?symbol={symbol}&interval=1m&includePrePost=true";
-        var response = await _httpClient.GetFromJsonAsync<YahooFinanceChartResponse>(url);
-        return response?.ToIntradayData();
+        _httpClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36");
+        try
+        {
+            var response = await _httpClient.GetFromJsonAsync<YahooFinanceChartResponse>(url);
+            return response?.ToIntradayData();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to fetch intraday data for symbol {Symbol}", symbol);
+            return [];
+        }
     }
 }

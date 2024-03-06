@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -27,7 +28,7 @@ namespace Toi.Backend.Controllers
         public async Task<ActionResult<StockInfo>> GetStockInfo()
         {
             Currency toCurrency = "EUR";
-            var item = await _cache.GetOrCreateAsync<ActionResult<StockInfo>>((toCurrency), async entry =>
+            var item = await _cache.GetOrCreateAsync<ActionResult<StockInfo>>(toCurrency, async entry =>
             {
                 entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60);
                 var stockPrice = await _priceService.GetCurrentPriceAsync();

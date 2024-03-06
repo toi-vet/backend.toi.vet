@@ -18,10 +18,10 @@ public class EcbExchangeRateService : IExchangeRateService
 
     public async Task<ExchangeRate?> GetExchangeRateAsync()
     {
-        var xml = await this._client.GetStringAsync("https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
+        var xml = await _client.GetStringAsync("https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
         var serializer = new XmlSerializer(typeof(Envelope));
         using var reader = new StringReader(xml);
-        var envelope = (Envelope) serializer.Deserialize(reader);
+        var envelope = (Envelope?)serializer.Deserialize(reader);
         var curr = envelope?.Cube?.Cubes?.FirstOrDefault()?.Cubes?.SingleOrDefault(c => c.Currency == "CAD");
         if (curr != null && decimal.TryParse(curr.Rate, out var exchangeRate))
         {
