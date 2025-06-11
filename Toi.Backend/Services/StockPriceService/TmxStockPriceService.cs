@@ -20,7 +20,7 @@ public class TmxStockPriceService(ILogger<TmxStockPriceService> logger, GraphQLH
 
     public async Task<StockPrice?> GetCurrentPriceAsync()
     {
-        var symbol = "TOI";
+        var symbol = "TOI:CA";
         var request = new GraphQLRequest
         {
             OperationName = "getQuoteBySymbol",
